@@ -1,0 +1,44 @@
+import hashlib
+
+usuarios = {}
+
+def registrar_usuario():
+    nombre = input("Ingrese su nombre: ")
+    correo = input("Ingrese su correo electrónico: ")
+    contraseña = input("Ingrese su contraseña: ")
+
+    # Generar un hash de la contraseña
+    hash_contraseña = hashlib.sha256(contraseña.encode()).hexdigest()
+
+    # Crear un nuevo diccionario para el usuario
+    usuario = {
+        'nombre': nombre,
+        'correo': correo,
+        'contraseña': hash_contraseña
+    }
+
+    # Agregar el usuario al diccionario general de usuarios
+    usuarios[correo] = usuario
+
+    print("¡Registro exitoso!")
+
+def recuperar_contraseña():
+    correo = input("Ingrese su correo electrónico: ")
+
+    # Verificar si el correo existe en el diccionario de usuarios
+    if correo in usuarios:
+        nueva_contraseña = input("Ingrese su nueva contraseña: ")
+
+        # Generar un hash de la nueva contraseña
+        hash_nueva_contraseña = hashlib.sha256(nueva_contraseña.encode()).hexdigest()
+
+        # Actualizar la contraseña en el diccionario de usuarios
+        usuarios[correo]['contraseña'] = hash_nueva_contraseña
+
+        print("¡Contraseña actualizada con éxito!")
+    else:
+        print("El correo electrónico no está registrado")
+
+# Ejemplo de uso
+registrar_usuario()
+recuperar_contraseña()
